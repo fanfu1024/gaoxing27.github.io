@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;gaoxing27.gitee.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;right&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;.&#x2F;public&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="资源与效率的关系很微妙，相对较少的资源+相对较高的效率&#x3D;高性能，不知道我这样理解是否正确，如果不赞成我，可不可以手下留情，不要攻击我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-集合框架扩容机制">
+<meta property="og:url" content="https://gaoxing27.gitee.io/2021/06/03/Java-%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="和而不同">
+<meta property="og:description" content="资源与效率的关系很微妙，相对较少的资源+相对较高的效率&#x3D;高性能，不知道我这样理解是否正确，如果不赞成我，可不可以手下留情，不要攻击我">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-03T03:00:22.000Z">
+<meta property="article:modified_time" content="2021-06-03T08:15:30.443Z">
+<meta property="article:author" content="凡夫">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="集合框架">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gaoxing27.gitee.io/2021/06/03/Java-%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;gaoxing27.gitee.io&#x2F;2021&#x2F;06&#x2F;03&#x2F;Java-%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;03&#x2F;Java-集合框架扩容机制&#x2F;&quot;,&quot;title&quot;:&quot;Java-集合框架扩容机制&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Java-集合框架扩容机制 | 和而不同</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="和而不同" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">和而不同</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">五朝</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">65</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList%E6%89%A9%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">ArrayList扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap%E6%89%A9%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">HashMap扩容</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="凡夫"
+      src="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+  <p class="site-author-name" itemprop="name">凡夫</p>
+  <div class="site-description" itemprop="description">临渊羡鱼,不如退而结网</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/fox9916" title="我的CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;fox9916" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>我的CSDN</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gaoxing27.gitee.io/2021/06/03/Java-%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+      <meta itemprop="name" content="凡夫">
+      <meta itemprop="description" content="临渊羡鱼,不如退而结网">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="和而不同">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java-集合框架扩容机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-06-03 11:00:22 / 修改时间：16:15:30" itemprop="dateCreated datePublished" datetime="2021-06-03T11:00:22+08:00">2021-06-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+            <div class="post-description">资源与效率的关系很微妙，相对较少的资源+相对较高的效率=高性能，不知道我这样理解是否正确，如果不赞成我，可不可以手下留情，不要攻击我</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>资源与效率的关系很微妙，相对较少的资源+相对较高的效率=高性能，不知道我这样理解是否正确，如果不赞成我，可不可以手下留情，不要攻击我</p>
+<p><strong>JDK版本：1.8</strong> </p>
+<h3 id="ArrayList扩容"><a href="#ArrayList扩容" class="headerlink" title="ArrayList扩容"></a>ArrayList扩容</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1,首先是默认初始值的大小：</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;,</span><br><span class="line"><span class="comment">//2，接着是一个默认的空对象数组：</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="comment">//3，然后是ArrayList 实际数据存储的一个数组：</span></span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="comment">//4，elementData 的大小：</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></table></figure>
+<p><strong>获得ArrayList 的容量大小</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">getCapacity</span><span class="params">(ArrayList list)</span> </span>&#123;</span><br><span class="line">    Integer length = <span class="keyword">null</span>;</span><br><span class="line">    Class c = list.getClass();</span><br><span class="line">    Field f;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        f = c.getDeclaredField(<span class="string">&quot;elementData&quot;</span>);</span><br><span class="line">        f.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        Object[] o = (Object[]) f.get(list);</span><br><span class="line">        length = o.length;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>  length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>构造ArrayList 对象的时候，如果在构造函数里面什么也不传，会初始化一个空的数组；此时集合的容量和大小都为0</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>添加一个元素后，容量为10，大小为1</p>
+</li>
+<li><p>再往里添加10个元素后，集合的容量为15，大小为11</p>
+</li>
+<li><p>再往里添加5个元素后，集合的容量为22，大小为16</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">       ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       Integer capacity = getCapacity(list);</span><br><span class="line">       log.info(<span class="string">&quot;arrayList初始容量：&quot;</span>+capacity);</span><br><span class="line">       list.add(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">       log.info(<span class="string">&quot;添加一个元素：abc&quot;</span>);</span><br><span class="line">       log.info(<span class="string">&quot;arrayList容量：&quot;</span>+getCapacity(list));</span><br><span class="line">       log.info(<span class="string">&quot;arrayList大小：&quot;</span>+list.size());</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">           list.add(<span class="string">&quot;abc&quot;</span>+i);</span><br><span class="line">       &#125;</span><br><span class="line">       log.info(<span class="string">&quot;再添加10个元素&quot;</span>);</span><br><span class="line">       log.info(<span class="string">&quot;arrayList容量：&quot;</span>+getCapacity(list));</span><br><span class="line">       log.info(<span class="string">&quot;arrayList大小：&quot;</span>+list.size());</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">           list.add(<span class="string">&quot;gaoxing&quot;</span>+i);</span><br><span class="line">       &#125;</span><br><span class="line">       log.info(<span class="string">&quot;再添加5个元素&quot;</span>);</span><br><span class="line">       log.info(<span class="string">&quot;arrayList容量：&quot;</span>+getCapacity(list));</span><br><span class="line">       log.info(<span class="string">&quot;arrayList大小：&quot;</span>+list.size());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>总结：ArrayList 的内部实现，是用一个对象数组进行存放具体的值，然后用一种扩容的机制，进行数组的动态增长。</p>
+<p>其扩容机制可以理解为，如果元素的个数，大于其容量，则把其容量扩展为原来容量的1.5倍。</p>
+<h3 id="HashMap扩容"><a href="#HashMap扩容" class="headerlink" title="HashMap扩容"></a>HashMap扩容</h3><p><strong>HashMap中的变量</strong></p>
+<ul>
+<li>Node&lt;K,V&gt;：链表节点，包含了key、value、hash、next指针四个元素</li>
+<li>table：Node&lt;K,V&gt;类型的数组，里面的元素是链表，用于存放HashMap元素的实体</li>
+<li>size：记录了放入HashMap的元素个数</li>
+<li>loadFactor：负载因子</li>
+<li>threshold：阈值，决定了HashMap何时扩容，以及扩容后的大小，一般等于table大小乘以loadFactor</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">构造函数和描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>HashMap()</code>构造一个具有默认初始容量 (16) 和默认加载因子 (0.75)的空<code>HashMap</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>HashMap(int initialCapacity)</code>构造一个具有指定初始容量和默认负载因子 (0.75)的空<code>HashMap</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>HashMap(int initialCapacity, float loadFactor)</code>构造一个具有指定初始容量和负载因子的空<code>HashMap</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>HashMap(Map&lt;? extends K,? extends V&gt; m)</code>使用与指定<code>Map</code>相同的映射构造一个新的<code>HashMap</code>。</td>
+</tr>
+</tbody></table>
+<p><strong>扩容机制核心方法</strong></p>
+<p>Node&lt;K,V&gt;[] resize()</p>
+<p><strong>HashMap扩容分为三种情况：</strong></p>
+<ol>
+<li>使用默认构造方法初始化HashMap，在一开始初始化的时候会返回一个空的table，并且thershold为0。因此第一次扩容的容量为默认值DEFAULT_INITIAL_CAPACITY也就是16。同时threshold = DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR = 12，当大容量大于12时，自动扩容</li>
+<li>指定初始容量的构造方法初始化HashMap初始容量会等于threshold 当前的容量（threshold） * DEFAULT_LOAD_FACTOR。</li>
+<li>HashMap不是第一次扩容。如果HashMap已经扩容过的话，那么每次table的容量以及threshold量为原有的两倍。</li>
+</ol>
+<blockquote>
+<p>引用</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/eases_stone/article/details/79843851">https://blog.csdn.net/eases_stone/article/details/79843851</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/superxlcr/article/details/72810733">https://blog.csdn.net/superxlcr/article/details/72810733</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010890358/article/details/80496144">https://blog.csdn.net/u010890358/article/details/80496144</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/collection/" rel="tag"># 集合框架</a>
+              <a href="/tags/dataStructure/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/01/%E7%AE%80%E5%8D%95%E7%94%9F%E6%B4%BB%EF%BC%8C%E5%8A%AA%E5%8A%9B%E5%B7%A5%E4%BD%9C%EF%BC%8C%E7%88%B1%E8%87%AA%E5%B7%B1%E7%88%B1%E5%AE%B6%E4%BA%BA/" rel="prev" title="简单生活，努力工作，爱自己爱家人">
+                  <i class="fa fa-chevron-left"></i> 简单生活，努力工作，爱自己爱家人
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/08/java-%E9%9B%86%E5%90%88%E5%AE%B9%E5%99%A8/" rel="next" title="java-集合框架">
+                  java-集合框架 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凡夫</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

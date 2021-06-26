@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;gaoxing27.gitee.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;right&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;.&#x2F;public&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="@Controller：标注一个控制器组件类。标识一个该类是Spring MVC controller处理器，用来创建处理http请求的对象。组合注解（组合了@Component注解），应用在MVC层（控制层）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-核心注解">
+<meta property="og:url" content="https://gaoxing27.gitee.io/2021/04/19/Spring-%E6%A0%B8%E5%BF%83%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:site_name" content="和而不同">
+<meta property="og:description" content="@Controller：标注一个控制器组件类。标识一个该类是Spring MVC controller处理器，用来创建处理http请求的对象。组合注解（组合了@Component注解），应用在MVC层（控制层）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-19T11:42:42.000Z">
+<meta property="article:modified_time" content="2021-04-20T10:14:23.031Z">
+<meta property="article:author" content="凡夫">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="注解">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gaoxing27.gitee.io/2021/04/19/Spring-%E6%A0%B8%E5%BF%83%E6%B3%A8%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;gaoxing27.gitee.io&#x2F;2021&#x2F;04&#x2F;19&#x2F;Spring-%E6%A0%B8%E5%BF%83%E6%B3%A8%E8%A7%A3&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;04&#x2F;19&#x2F;Spring-核心注解&#x2F;&quot;,&quot;title&quot;:&quot;Spring-核心注解&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Spring-核心注解 | 和而不同</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="和而不同" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">和而不同</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">五朝</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">65</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller"><span class="nav-number">1.</span> <span class="nav-text">@Controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RestController"><span class="nav-number">2.</span> <span class="nav-text">@RestController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">3.</span> <span class="nav-text">@Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reponsitory"><span class="nav-number">4.</span> <span class="nav-text">@Reponsitory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component"><span class="nav-number">5.</span> <span class="nav-text">@Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration"><span class="nav-number">6.</span> <span class="nav-text">@Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resource"><span class="nav-number">7.</span> <span class="nav-text">@Resource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean"><span class="nav-number">8.</span> <span class="nav-text">@Bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Value"><span class="nav-number">9.</span> <span class="nav-text">@Value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PropertySource"><span class="nav-number">10.</span> <span class="nav-text">@PropertySource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequestBody"><span class="nav-number">11.</span> <span class="nav-text">@RequestBody</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResponseBody"><span class="nav-number">12.</span> <span class="nav-text">@ResponseBody</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequestMapping"><span class="nav-number">13.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBootApplication"><span class="nav-number">14.</span> <span class="nav-text">@SpringBootApplication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ComponentScan"><span class="nav-number">15.</span> <span class="nav-text">@ComponentScan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EnableAutoConfiguration"><span class="nav-number">16.</span> <span class="nav-text">@EnableAutoConfiguration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConfigurationProperties"><span class="nav-number">17.</span> <span class="nav-text">@ConfigurationProperties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConditionalOnBean%E4%B8%8E-ConditionalOnMissingBean"><span class="nav-number">18.</span> <span class="nav-text">@ConditionalOnBean与@ConditionalOnMissingBean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConditionalOnClass%E4%B8%8E-ConditionalOnMissingClass"><span class="nav-number">19.</span> <span class="nav-text">@ConditionalOnClass与@ConditionalOnMissingClass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PathVariable-%E5%92%8C-RequestParam"><span class="nav-number">20.</span> <span class="nav-text">@PathVariable 和 @RequestParam</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ControllerAdvice"><span class="nav-number">21.</span> <span class="nav-text">@ControllerAdvice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ExceptionHandler"><span class="nav-number">22.</span> <span class="nav-text">@ExceptionHandler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transactional"><span class="nav-number">23.</span> <span class="nav-text">@Transactional</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="凡夫"
+      src="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+  <p class="site-author-name" itemprop="name">凡夫</p>
+  <div class="site-description" itemprop="description">临渊羡鱼,不如退而结网</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/fox9916" title="我的CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;fox9916" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>我的CSDN</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gaoxing27.gitee.io/2021/04/19/Spring-%E6%A0%B8%E5%BF%83%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+      <meta itemprop="name" content="凡夫">
+      <meta itemprop="description" content="临渊羡鱼,不如退而结网">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="和而不同">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring-核心注解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-19 19:42:42" itemprop="dateCreated datePublished" datetime="2021-04-19T19:42:42+08:00">2021-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-04-20 18:14:23" itemprop="dateModified" datetime="2021-04-20T18:14:23+08:00">2021-04-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+            <div class="post-description">@Controller：标注一个控制器组件类。标识一个该类是Spring MVC controller处理器，用来创建处理http请求的对象。组合注解（组合了@Component注解），应用在MVC层（控制层）</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h3><p>@Controller：标注一个控制器组件类。标识一个该类是Spring MVC controller处理器，用来创建处理http请求的对象。组合注解（组合了@Component注解），应用在MVC层（控制层）</p>
+<h3 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h3><p><code>Spring4</code>之后加入的注解，原来在<code>@Controller</code>中返回<code>json</code>需要<code>@ResponseBody</code>来配合，如果直接用<code>@RestController</code>替代<code>@Controller</code>就不需要再配置<code>@ResponseBody</code>，默认返回json格式。</p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="@Service"></a>@Service</h3><p>@Service 把类当做容器中的一个组件来使用。 当使用@Autowired注解则是实例化构造器。因为在自动注入时，是一个接口类型，所以要在容器中找到相应的实现类注入。故@Service加到类上。组合注解（组合了@Component注解），应用在service层（业务逻辑）。</p>
+<h3 id="Reponsitory"><a href="#Reponsitory" class="headerlink" title="@Reponsitory"></a>@Reponsitory</h3><p>@Repository注解便属于最先引入的一批，它用于将数据访问层 (DAO 层 ) 的类标识为 Spring Bean。具体只需将该注解标注在 DAO类上即可。为什么 @Repository 只能标注在 DAO 类上呢？这是因为该注解的作用不只是将类识别为Bean，同时它还能将所标注的类中抛出的数据访问异常封装为 Spring 的数据访问异常类型。 Spring本身提供了一个丰富的并且是与具体的数据访问技术无关的数据访问异常结构，用于封装不同的持久层框架抛出的异常，使得异常独立于底层的框架。组合注解（组合了@Component注解），应用在DAO层（数据访问层）。</p>
+<h3 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h3><p>把普通pojo实例化到spring容器中，相当于配置文件中的，表示一个带注释的类的一个”组件”，成为Spring管理的Bean。当使用基于注解的配置和类路径扫描时，这些类被视为自动检测的候选对象。同时@Component还是一个元注解。</p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="@Configuration"></a>@Configuration</h3><p>@Configuration作用在类上，声明一个class需要被spring解析以扩充beanDefinition。 @Configration注解同时被@Component注解修饰，因此具有被自动加载的特点，被@Configuration修饰的类本身也会作为definition注册。value属性是Configuration bean名称。</p>
+<h3 id="Resource"><a href="#Resource" class="headerlink" title="@Resource"></a>@Resource</h3><p>这个注解属于J2EE的。<code>@Resource</code>的作用相当于<code>@Autowired</code>，只不过<code>@Autowired</code>按<code>byType</code>自动注入，而<code>@Resource</code>默认按 <code>byName</code>自动注入罢了。<code>@Resource</code>有两个属性是比较重要的，分是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。</p>
+<p>@Resource装配顺序</p>
+<ol>
+<li>如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常</li>
+<li>如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常</li>
+<li>如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常</li>
+<li>如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配；</li>
+</ol>
+<h3 id="Bean"><a href="#Bean" class="headerlink" title="@Bean"></a>@Bean</h3><p>Spring的@Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring管理。产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IOC容器中。 SpringIOC 容器管理一个或者多个bean，这些bean都需要在@Configuration注解下进行创建，在一个方法上使用@Bean注解就表明这个方法需要交给Spring进行管理。</p>
+<h3 id="Value"><a href="#Value" class="headerlink" title="@Value"></a>@Value</h3><p>值的注入。经常与Spring EL表达式语言一起使用，注入普通字符，系统属性，表达式运算结果，其他Bean的属性，文件内容，网址请求内容，配置文件属性值等等。 主要两种使用方法：</p>
+<ul>
+<li>@Value(“#{configProperties[‘key’]}”) 用于获取配置对象属性的值</li>
+<li>@Value(“${key}”) 用于获取配置文件中的值</li>
+</ul>
+<h3 id="PropertySource"><a href="#PropertySource" class="headerlink" title="@PropertySource"></a>@PropertySource</h3><p>指定文件地址。提供一种方便的、声明性的机制，用于向Spring环境添加PropertySource。与@Configuration类一起使用。在app项目中，我们通过@PropertySource注解到JavaConfig类上，设置.properties配置文件的路径。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@PropertySource(value = &quot;application.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;demo.msg&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h3><p>用于读取 Request 请求的 body 部分并且Content-Type 为 application/json格式的数据，接收到数据之后会自动将数据绑定到 Java 对象上去。系统会使用<code>HttpMessageConverter</code>或者自定义的<code>HttpMessageConverter</code>将请求的 body 中的 json 字符串转换为 java 对象。</p>
+<h3 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h3><p>@ResponseBody注解表示该方法的返回的结果直接写入HTTP响应正文中（ResponseBody），一般在异步获取数据时使用，通常是在使用@RequestMapping后。返回值通常解析为跳转路径，加上@ResponseBody后返回结果不会被解析为跳转路径，而是直接写入HTTP响应正文中。</p>
+<h3 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h3><p>使用 @RequestMapping 来映射 Request请求与处理器，通过这个注解可以定义不同的处理器映射规则，即为控制器指定可以处理哪些URL请求。</p>
+<p>用@RequestMapping来映射URL 到控制器类，或者是到Controller控制器的处理方法上。 当@RequestMapping标记在Controller类上的时候，里面使用@RequestMapping标记的方法的请求地址都是相对于类上的@RequestMapping 而言的； 当Controller 类上没有标记@RequestMapping注解时，方法上的@RequestMapping都是绝对路径。这种绝对路径和相对路径所组合成的最终路径都是相对于根路径“/ ”而言的。</p>
+<h3 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h3><p>@SpringBootApplication是一个组合注解 源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan(</span></span><br><span class="line"><span class="meta">  excludeFilters = &#123;</span></span><br><span class="line"><span class="meta">	@Filter(type = FilterType.CUSTOM,classes = &#123;TypeExcludeFilter.class&#125;),    </span></span><br><span class="line"><span class="meta">	@Filter( type = FilterType.CUSTOM,classes = &#123;AutoConfigurationExcludeFilter.class&#125;)</span></span><br><span class="line"><span class="meta">  &#125;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由源码可知，主要包含三个注解@SpringBootConfiguration、@EnableAutoConfiguration、@ComponentScan。</p>
+<h3 id="ComponentScan"><a href="#ComponentScan" class="headerlink" title="@ComponentScan"></a>@ComponentScan</h3><ul>
+<li>@ComponentScan（包扫描）component是组件，scan是扫描，所以这个注解的含义就是用来扫描组件的</li>
+<li>ComponentScan就是扫描所标注的类所在包下的所有需要注入的组件，将其注入，这里他是在@SpringBootApplication 中体现的，所以这个注解会自动注入所有在主程序所在包下的组件</li>
+<li>以前在ssm项目中我们需要去配置我们的包扫描,相对应的XML配置就是context:component-scan/， 将符合条件的组件加入到IOC容器中。</li>
+</ul>
+<h3 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h3><p>@EnableAutoConfiguration表示开启自动装配，注解主要作用从classpath中搜寻所有的META-INF/spring.factories配置文件，并将其中的org.spring-framework.boot.autoconfigure.EnableAutoConfiguration对应的配置项通过反射实例化为对应的标注了@Configuration的javaConfig形式的IOC容器配置类，然后汇总为一整个并加载到IOC容器。</p>
+<p>源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(&#123;AutoConfigurationImportSelector.class&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration &#123;</span><br><span class="line">  String ENABLED_OVERRIDE_PROPERTY = <span class="string">&quot;spring.boot.enableautoconfiguration&quot;</span>;</span><br><span class="line"></span><br><span class="line">  Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中两个比较重要的注解@AutoConfigurationPackage与@Import({AutoConfigurationImportSelector.class})</p>
+<ul>
+<li>@AutoConfigurationPackage表示获取我们注解所在包下的组件去进行注册</li>
+<li>@Import({AutoConfigurationImportSelector.class})表示自动配置导入选择器，从META-INF/spring.factories获取我们的自动配置信息的</li>
+</ul>
+<h3 id="ConfigurationProperties"><a href="#ConfigurationProperties" class="headerlink" title="@ConfigurationProperties"></a>@ConfigurationProperties</h3><p>将properties属性与一个Bean及其属性相关联，从而实现类型安全的配置。例如：@ConfigurationProperties(prefix=”connection”)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span><span class="comment">// lombok注解，相关知识可以自行查阅</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix=&quot;connection&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectionSettings</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String remoteAddress;</span><br><span class="line">    <span class="keyword">private</span> String password ;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ConditionalOnBean与-ConditionalOnMissingBean"><a href="#ConditionalOnBean与-ConditionalOnMissingBean" class="headerlink" title="@ConditionalOnBean与@ConditionalOnMissingBean"></a>@ConditionalOnBean与@ConditionalOnMissingBean</h3><p>@ConditionalOnBean与@ConditionalOnMissingBean两个注解都是条件注解,作用相反。</p>
+<ul>
+<li>@ConditionalOnBean表示存当给定的在bean存在时,则实例化当前Bean。</li>
+<li>@ConditionalOnMissingBean表示当给定的在bean不存在时,则实例化当前Bean。</li>
+</ul>
+<h3 id="ConditionalOnClass与-ConditionalOnMissingClass"><a href="#ConditionalOnClass与-ConditionalOnMissingClass" class="headerlink" title="@ConditionalOnClass与@ConditionalOnMissingClass"></a>@ConditionalOnClass与@ConditionalOnMissingClass</h3><p>@ConditionalOnClass与@ConditionalOnMissingClass这两个注解与@ConditionalOnBean与@ConditionalOnMissingBean两个注解相似。</p>
+<ul>
+<li>@ConditionalOnClass 表示当给定的类名在类路径上存在，则实例化当前Bean</li>
+<li>@ConditionalOnMissingClass 表示当给定的类名在类路径上不存在，则实例化当前Bean</li>
+</ul>
+<h3 id="PathVariable-和-RequestParam"><a href="#PathVariable-和-RequestParam" class="headerlink" title="@PathVariable 和 @RequestParam"></a>@PathVariable 和 @RequestParam</h3><p><code>@PathVariable</code>用于获取路径参数，<code>@RequestParam</code>用于获取查询参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/stu/list/&#123;userId&#125;&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> List&lt;Student&gt; <span class="title">list</span><span class="params">(<span class="meta">@PathVariable(&quot;userId&quot;)</span>Long userId,<span class="meta">@RequestParam(value = &quot;type&quot;,required = false)</span> String type)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果我们请求的 url 是：/stu/list/20?type=tea</p>
+<p>那么我们服务获取到的数据就是：userId=20,type=tea。</p>
+<h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><ol>
+<li><p>全局异常处理（ @ExceptionHandler）</p>
+<p>使用 @ControllerAdvice 实现全局异常处理，只需要定义类，添加该注解即可定义方式如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyGlobalExceptionHandler</span> </span>&#123;</span><br><span class="line">    <span class="meta">@ExceptionHandler(Exception.class)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">customException</span><span class="params">(Exception e)</span> </span>&#123;</span><br><span class="line">        ModelAndView mv = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">        mv.addObject(<span class="string">&quot;message&quot;</span>, e.getMessage());</span><br><span class="line">        mv.setViewName(<span class="string">&quot;myerror&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> mv;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@ExceptionHandler 注解用来指明异常的处理类型，即如果这里指定为 NullpointerException，则数组越界异常就不会进到这个方法中来</p>
+</li>
+<li><p>全局数据绑定（ @ModelAttribute）</p>
+<p>全局数据绑定功能可以用来做一些初始化的数据操作，我们可以将一些公共的数据定义在添加了 @ControllerAdvice 注解的类中，这样，在每一个 Controller 的接口中，就都能够访问导致这些数据。</p>
+<p>默认情况下，这个全局数据的 key 就是返回的变量名，value 就是方法返回值，当然开发者可以通过 @ModelAttribute 注解的 name 属性去重新指定 key。定义完成后，在任何一个Controller 的接口中，都可以获取到这里定义的数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyControllerAdvice</span> </span>&#123;</span><br><span class="line">    <span class="meta">@ModelAttribute</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cat <span class="title">cat</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Cat cat = <span class="keyword">new</span> Cat();</span><br><span class="line">        cat.name=<span class="string">&quot;小喵&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span>  cat;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/index&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(Model model)</span></span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = model.asMap();</span><br><span class="line">        Object cat = map.get(<span class="string">&quot;cat&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;hello1&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>全局数据预处理（@InitBinder）</p>
+<p>作用：对HTTP请求参数进行预处理，再绑定到对应的接口。这里我们就可以对参数做一些额外的处理，比如时间格式的转换等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyControllerAdvice</span> </span>&#123;</span><br><span class="line">    <span class="meta">@InitBinder</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initBindeer</span><span class="params">(WebDataBinder webDataBinder)</span> </span>&#123;</span><br><span class="line">        webDataBinder.registerCustomEditor(Date.class, <span class="keyword">new</span> CustomDateEditor(<span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>), <span class="keyword">true</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/get&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(Date date)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="ExceptionHandler"><a href="#ExceptionHandler" class="headerlink" title="@ExceptionHandler"></a>@ExceptionHandler</h3><p>@ExceptionHandler :注解声明异常处理方法</p>
+<h3 id="Transactional"><a href="#Transactional" class="headerlink" title="@Transactional"></a>@Transactional</h3><p>在要开启事务的方法上使用<code>@Transactional</code>注解即可!</p>
+<p>我们知道 Exception 分为运行时异常 RuntimeException 和非运行时异常。在@Transactional注解中如果不配置rollbackFor属性,那么事物只会在遇到<code>RuntimeException</code>的时候才会回滚,加上rollbackFor=Exception.class,可以让事物在遇到非运行时异常时也回滚。@Transactional注解一般用在可以作用在类或者方法上。</p>
+<ul>
+<li>作用于类：当把@Transactional 注解放在类上时，表示所有该类的public 方法都配置相同的事务属性信息。</li>
+<li>作用于方法：当类配置了@Transactional，</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+              <a href="/tags/%E6%B3%A8%E8%A7%A3/" rel="tag"># 注解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/18/Spring-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/" rel="prev" title="Spring-事务管理">
+                  <i class="fa fa-chevron-left"></i> Spring-事务管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/20/%E8%8F%A9%E8%90%A8%E7%95%8F%E5%9B%A0-%E5%87%A1%E5%A4%AB%E7%95%8F%E6%9E%9C/" rel="next" title="菩萨畏因-凡夫畏果">
+                  菩萨畏因-凡夫畏果 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凡夫</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
