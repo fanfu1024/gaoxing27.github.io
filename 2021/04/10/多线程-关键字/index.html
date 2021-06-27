@@ -27,14 +27,12 @@
 <meta property="og:site_name" content="和而不同">
 <meta property="og:description" content="在Java中，synchronized关键字是用来控制线程同步的，就是在多线程的环境下，控制synchronized代码段不被多个线程同时执行。synchronized 可以修饰类、方法、变量。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gaoxing27.gitee.io/images/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97%E5%8E%9F%E7%90%86.png">
 <meta property="article:published_time" content="2021-04-10T12:51:17.000Z">
-<meta property="article:modified_time" content="2021-06-06T06:51:19.524Z">
+<meta property="article:modified_time" content="2021-06-27T11:10:55.126Z">
 <meta property="article:author" content="凡夫">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gaoxing27.gitee.io/images/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97%E5%8E%9F%E7%90%86.png">
 
 
 <link rel="canonical" href="https://gaoxing27.gitee.io/2021/04/10/%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%85%B3%E9%94%AE%E5%AD%97/">
@@ -93,9 +91,9 @@
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">65</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">41</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">66</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -233,7 +231,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-06 14:51:19" itemprop="dateModified" datetime="2021-06-06T14:51:19+08:00">2021-06-06</time>
+        <time title="修改时间：2021-06-27 19:10:55" itemprop="dateModified" datetime="2021-06-27T19:10:55+08:00">2021-06-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -263,9 +261,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h3><p>在 Java 中，synchronized 关键字是用来在多线程的环境下，控制 synchronized 代码段不被多个线程同时执行。synchronized 可以修饰类、方法、变量。</p>
-<p>在 Java 早期版本中，synchronized属于重量级锁，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 Mutex Lock 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而操作系统实现线程之间的切换时需要从用户态转换到内核态，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的 synchronized 效率低的原因。</p>
-<p>庆幸的是在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，如自旋锁、适应性自旋锁、锁消除、锁粗化、偏向锁、轻量级锁等技术来减少锁操作的开销。</p>
+        <h3 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h3><p>在 Java 在多线程的环境下，synchronized 关键字用来控制同一代码段不被多个线程同时执行，synchronized 可以修饰类、方法、变量。在 Java 早期版本中，synchronized属于重量级锁，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的 Mutex Lock 来实现的，Java 的线程是映射到操作系统的原生线程之上的。如果要挂起或者唤醒一个线程，都需要操作系统帮忙完成，而操作系统实现线程之间的切换时需要从用户态转换到内核态，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是早期的 synchronized 效率低的原因。</p>
+<p>在 Java 6 之后 Java 官方对从 JVM 层面对synchronized 较大优化，如自旋锁、适应性自旋锁、锁消除、锁粗化、偏向锁、轻量级锁等技术来减少锁操作的开销。</p>
 <p><strong>synchronized的三种使用方式：</strong></p>
 <ul>
 <li><strong>修饰实例方法</strong>: 作用于当前对象实例，进入同步代码前要获得当前对象实例的锁</li>
@@ -285,25 +282,10 @@
 <li>初始化 uniqueInstance</li>
 <li>将 uniqueInstance 指向分配的内存地址</li>
 </ol>
-<p>但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1-&gt;3-&gt;2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T1 执行了 1 和 3，此时 T2 调用 getUniqueInstance() 后发现 uniqueInstance 不为空，因此返回 uniqueInstance，但此时 uniqueInstance 还未被初始化。</p>
-<p>使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。</p>
-<p><strong>说一下 synchronized 底层实现原理？</strong></p>
-<p>synchronized是Java中的一个关键字，在使用的过程中并没有看到显示的加锁和解锁过程。因此有必要通过javap命令，查看相应的字节码文件。</p>
-<p>synchronized 同步语句块的情况</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SynchronizedDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;synchronized 代码块&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过JDK 反汇编指令 javap -c -v SynchronizedDemo</p>
-<p><img src="/images/%E5%A4%9A%E7%BA%BF%E7%A8%8B/synchronized%E5%85%B3%E9%94%AE%E5%AD%97%E5%8E%9F%E7%90%86.png" alt="synchronized关键字原理"></p>
-<p>可以看出在执行同步代码块之前之后都有一个monitor字样，其中前面的是monitorenter，后面的是离开monitorexit，不难想象一个线程也执行同步代码块，首先要获取锁，而获取锁的过程就是monitorenter ，在执行完代码块之后，要释放锁，释放锁就是执行monitorexit指令。</p>
-<p><strong>为什么会有两个monitorexit呢</strong></p>
-<p>这个主要是防止在同步代码块中线程因异常退出，而锁没有得到释放，这必然会造成死锁（等待的线程永远获取不到锁）。因此最后一个monitorexit是保证在异常情况下，锁也可以得到释放，避免死锁。<br>仅有ACC_SYNCHRONIZED这么一个标志，该标记表明线程进入该方法时，需要monitorenter，退出该方法时需要monitorexit。</p>
-<p><strong>synchronized可重入的原理</strong></p>
-<p>重入锁是指一个线程获取到该锁之后，该线程可以继续获得该锁。底层原理维护一个计数器，当线程获取该锁时，计数器加一，再次获得该锁时继续加一，释放锁时，计数器减一，当计数器值为0时，表明该锁未被任何线程所持有，其它线程可以竞争获取锁。</p>
-<p><strong>什么是自旋</strong></p>
-<p>很多 synchronized 里面的代码只是一些很简单的代码，执行时间非常快，此时等待的线程都加锁可能是一种不太值得的操作，因为线程阻塞涉及到用户态和内核态切换的问题。既然 synchronized 里面的代码执行得非常快，不妨让等待锁的线程不要被阻塞，而是在 synchronized 的边界做忙循环，这就是自旋。如果做了多次循环发现还没有获得锁，再阻塞，这样可能是一种更好的策略。</p>
-<p><strong>多线程中 synchronized 锁升级的原理是什么</strong></p>
-<p><strong>锁的升级的目的</strong>：锁升级是为了降低锁带来的性能消耗。在Java6之后优化synchronized的实现方式，使用了偏向锁升级为轻量级锁再升级到重量级锁的方式，从而减低了锁带来的性能消耗。</p>
-<p>JVM优化synchronized的运行机制，当JVM检测到不同的竞争状态时，就会根据需要自动切换到合适的锁，这种切换就是锁的升级。升级是不可逆的，也就是说只能从低到高，也就是偏向–&gt;轻量级–&gt;重量级，不能够降级</p>
+<p>但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1-&gt;3-&gt;2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T1 执行了 1 和 3，此时 T2 调用 getUniqueInstance() 后发现 uniqueInstance 不为空，因此返回 uniqueInstance，但此时 uniqueInstance 还未被初始化；使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。</p>
+<p><strong>synchronized 锁升级的原理</strong></p>
+<p><strong>锁的升级的目的</strong></p>
+<p>锁升级是为了降低锁带来的性能消耗。在Java6之后优化synchronized的实现方式，使用了偏向锁升级为轻量级锁再升级到重量级锁的方式，从而减低了锁带来的性能消耗；当JVM检测到不同的竞争状态时，就会根据需要自动切换到合适的锁，这种切换就是锁的升级。升级是不可逆的，也就是说只能从低到高，也就是偏向–&gt;轻量级–&gt;重量级，不能够降级</p>
 <p><strong>锁级别</strong>：无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁</p>
 <p><strong>无锁</strong>：没有对资源进行锁定，所有的线程都能访问并修改同一个资源，但同时只有一个线程能修改成功，其他修改失败的线程会不断重试直到修改成功。</p>
 <p><strong>偏向锁</strong>：指的就是偏向第一个加锁线程，该线程是不会主动释放偏向锁的，只有当其他线程尝试竞争偏向锁才会被释放。</p>
@@ -311,14 +293,6 @@
 <p>当前只有一个等待线程，则该线程将通过自旋进行等待。但是当自旋超过一定的次数时，轻量级锁便会升级为重量级锁；当一个线程已持有锁，另一个线程在自旋，而此时又有第三个线程来访时，轻量级锁也会升级为重量级锁。</p>
 <p><strong>重量级锁</strong>：指当有一个线程获取锁之后，其余所有等待获取该锁的线程都会处于阻塞状态。</p>
 <p>重量级锁通过对象内部的监视器（monitor）实现，而其中 monitor 的本质是依赖于底层操作系统的 Mutex Lock 实现，操作系统实现线程之间的切换需要从用户态切换到内核态，切换成本非常高。</p>
-<p><strong>线程 B 怎么知道线程 A 修改了变量</strong></p>
-<ol>
-<li>volatile 修饰变量</li>
-<li>synchronized 修饰修改变量的方法、</li>
-<li>wait/notifywhile 轮询</li>
-</ol>
-<p><strong>当一个线程进入一个对象的 synchronized 方法 A 之后，其它线程是否可进入此对象的 synchronized 方法 B</strong></p>
-<p>不能。其它线程只能访问该对象的非同步方法，同步方法则不能进入。因为非静态方法上的 synchronized 修饰符要求执行方法时要获得对象的锁，如果已经进入A 方法说明对象锁已经被取走，那么试图进入 B 方法的线程就只能在等锁池（注意不是等待池哦）中等待对象的锁。</p>
 <p><strong>synchronized、volatile、CAS 比较</strong></p>
 <ol>
 <li>synchronized 是悲观锁，属于抢占式，会引起其他线程阻塞。</li>
@@ -330,7 +304,7 @@
 <li>首先synchronized是Java内置关键字，在JVM层面，Lock是个Java类；<br>synchronized 可以给类、方法、代码块加锁；而 lock 只能给代码块加锁。</li>
 <li>synchronized 不需要手动获取锁和释放锁，使用简单，发生异常会自动释放锁，不会造成死锁；而 lock 需要自己加锁和释放锁，如果使用不当没有 unLock()去释放锁就会造成死锁。<br>通过 Lock 可以知道有没有成功获取锁，而 synchronized 却无法办到。</li>
 </ul>
-<p><strong>synchronized 和 ReentrantLock 区别是什么</strong></p>
+<p><strong>synchronized 和 ReentrantLock 区别</strong></p>
 <p>synchronized 是和 if、else、for、while 一样的关键字，ReentrantLock 是类，这是二者的本质区别。</p>
 <ul>
 <li><p>既然 ReentrantLock 是类，那么它就提供了比synchronized 更多更灵活的特性，可以被继承、可以有方法、可以有各种各样的类变量</p>
