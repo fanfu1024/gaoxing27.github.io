@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;gaoxing27.gitee.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;right&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;.&#x2F;public&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="TCP&#x2F;IP四层模型 网络接口层（链路层）：包括操作系统中的设备驱动程序、计算机中对应的网络接口卡 网络层（互连层、网际层）：处理分组在网络中的活动，比如分组的选路。负责IP寻址，分割和组装数据包，路由选择等。 传输层：主要为两台主机上的应用提供端到端的通信 应用层：负责处理特定的应用程序细节。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="https://gaoxing27.gitee.io/2021/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="和而不同">
+<meta property="og:description" content="TCP&#x2F;IP四层模型 网络接口层（链路层）：包括操作系统中的设备驱动程序、计算机中对应的网络接口卡 网络层（互连层、网际层）：处理分组在网络中的活动，比如分组的选路。负责IP寻址，分割和组装数据包，路由选择等。 传输层：主要为两台主机上的应用提供端到端的通信 应用层：负责处理特定的应用程序细节。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gaoxing27.gitee.io/images/network/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%8ETCPIP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.png">
+<meta property="article:published_time" content="2021-04-07T06:17:52.000Z">
+<meta property="article:modified_time" content="2021-06-30T10:54:26.201Z">
+<meta property="article:author" content="凡夫">
+<meta property="article:tag" content="network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gaoxing27.gitee.io/images/network/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%8ETCPIP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.png">
+
+
+<link rel="canonical" href="https://gaoxing27.gitee.io/2021/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;gaoxing27.gitee.io&#x2F;2021&#x2F;04&#x2F;07&#x2F;%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;04&#x2F;07&#x2F;计算机网络&#x2F;&quot;,&quot;title&quot;:&quot;计算机网络&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>计算机网络 | 和而不同</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="和而不同" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">和而不同</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">五朝</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">41</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">66</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP%E5%9B%9B%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">TCP&#x2F;IP四层模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">OSI七层模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%8ETCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">OSI参考模型与TCP&#x2F;IP参考模型对应关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">4.</span> <span class="nav-text">TCP 三次握手和四次挥手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%E5%92%8CUDP"><span class="nav-number">5.</span> <span class="nav-text">TCP和UDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%EF%BC%9A%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">TCP：流量控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%EF%BC%9A%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="nav-number">7.</span> <span class="nav-text">TCP：拥塞控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP"><span class="nav-number">8.</span> <span class="nav-text">UDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E5%92%8C%E9%9D%9E%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">9.</span> <span class="nav-text">面向连接和非面向连接的服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http%E5%92%8CHttps"><span class="nav-number">10.</span> <span class="nav-text">Http和Https</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="凡夫"
+      src="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+  <p class="site-author-name" itemprop="name">凡夫</p>
+  <div class="site-description" itemprop="description">临渊羡鱼,不如退而结网</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/fox9916" title="我的CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;fox9916" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>我的CSDN</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gaoxing27.gitee.io/2021/04/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+      <meta itemprop="name" content="凡夫">
+      <meta itemprop="description" content="临渊羡鱼,不如退而结网">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="和而不同">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-07 14:17:52" itemprop="dateCreated datePublished" datetime="2021-04-07T14:17:52+08:00">2021-04-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-30 18:54:26" itemprop="dateModified" datetime="2021-06-30T18:54:26+08:00">2021-06-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h3><ul>
+<li>网络接口层（链路层）：包括操作系统中的设备驱动程序、计算机中对应的网络接口卡</li>
+<li>网络层（互连层、网际层）：处理分组在网络中的活动，比如分组的选路。负责IP寻址，分割和组装数据包，路由选择等。</li>
+<li>传输层：主要为两台主机上的应用提供端到端的通信</li>
+<li>应用层：负责处理特定的应用程序细节。<span id="more"></span></li>
+</ul>
+<h3 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h3><ul>
+<li><code>物理层</code>：主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输比特流。<br>单位：比特、数据位、流、比特流</li>
+<li><code>数据链路层</code>：主要将从物理层接收的数据进行 MAC 地址（网卡的地址）的封装与解封装。在这一层工作的设备是交换机，数据通过交换机来传输。<br>单位：帧、数据帧</li>
+<li><code>网络层</code>：主要将从下层接收到的数据进行 IP 地址（例 192.168.0.1)的封装与解封装。在这一层工作的设备是路由器。<br>单位：数据报、数据包、分组、包</li>
+<li><code>传输层</code>：定义了一些传输数据的协议和端口号（WWW 端口 80 等），如：TCP（传输控制协议，传输效率低，可靠性强，用于传输可靠性要求高，数据量大的数据），UDP（用户数据报协议，与 TCP 特性恰恰相反，用于传输可靠性要求不高，数据量小的数据，如 QQ 聊天数据就是通过这种方式传输的）。主要是将从下层接收的数据进行分段进行传输，到达目的地址后在进行重组。<br>单位：数据段、分段、报文段</li>
+<li><code>会话层</code>：通过传输层（端口号：传输端口与接收端口）建立数据传输的通路。主要在你的系统之间发起会话或者接受会话请求（设备之间需要互相认识可以是 IP 也可以是 MAC 或者是主机名）</li>
+<li><code>表示层</code>：主要是进行对接收的数据进行解释、加密与解密、压缩与解压缩等（也就是把计算机能够识别的东西转换成人能够能识别的东西（如图片、声音等））</li>
+<li><code>应用层</code>：主要是一些终端的应用，比如说FTP（各种文件下载），WEB（IE浏览），QQ等。<br>单位：报文</li>
+</ul>
+<h3 id="OSI参考模型与TCP-IP参考模型对应关系"><a href="#OSI参考模型与TCP-IP参考模型对应关系" class="headerlink" title="OSI参考模型与TCP/IP参考模型对应关系"></a>OSI参考模型与TCP/IP参考模型对应关系</h3><p><img src="/images/network/OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E4%B8%8ETCPIP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.png" alt="OSI参考模型与TCP/IP参考模型对应关系"></p>
+<p>​    共同点：</p>
+<ul>
+<li>两个都是以<code>协议栈</code>的概念为基础，协议栈中的协议彼此互相独立；</li>
+<li>都采用了<code>层次结构</code>的概念，各层功能大体相似。</li>
+</ul>
+<p>不同点：</p>
+<ul>
+<li>OSI有7层，TCP/IP有4层。</li>
+<li>TCP/IP网络层提供无连接通信，传输层支持无连接和面向连接两种；<br>OSI网络层支持面向连接和无连接，传输层只支持面向连接的通信。</li>
+</ul>
+<h3 id="TCP-三次握手和四次挥手"><a href="#TCP-三次握手和四次挥手" class="headerlink" title="TCP 三次握手和四次挥手"></a>TCP 三次握手和四次挥手</h3><p><strong>三次握手</strong>：</p>
+<p>为了准确无误地把数据送达目标处，TCP协议采用了三次握手策略。<br>用TCP协议把数据包送出去后，TCP不会对传送后的情况置之不理，它一定会向对方确认是否成功送达。握手过程中使用了TCP的标志：SYN和ACK</p>
+<ul>
+<li>发送端首先发送一个带SYN标志的数据包给对方。</li>
+<li>接收端收到后，回传一个带有SYN/ACK标志的数据包以示传达确认信息。</li>
+<li>最后，发送端再回传一个带ACK标志的数据包，代表“握手”结束。</li>
+</ul>
+<blockquote>
+<p>注意：若在握手过程中某个阶段莫名中断，TCP协议会再次以相同的顺序发送相同的数据包</p>
+</blockquote>
+<p><strong>四次挥手</strong>：</p>
+<p>断开一个TCP连接则需要四次挥手</p>
+<ul>
+<li>第一次挥手：主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不 会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可 以接受数据</li>
+<li>第二次挥手：被动关闭方收到FIN包后，发送一个ACK给对方，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号）</li>
+<li>第三次挥手：被动关闭方发送一个FIN，用来关闭被动关闭方到主动关闭方的数据传送，也就是告诉主动关闭方，我的数据也发送完了，不会再给你发数据了</li>
+<li>第四次挥手：主动关闭方收到FIN后，发送一个ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手</li>
+</ul>
+<h3 id="TCP和UDP"><a href="#TCP和UDP" class="headerlink" title="TCP和UDP"></a>TCP和UDP</h3><ul>
+<li>TCP（Transmission Control Protocol，传输控制协议）是基于连接的协议，也就是说，在正式收发数据前，必须和对方建立可靠的连接。一个TCP连接必须要经过三次“对话”才能建立起来</li>
+<li>UDP（User Data Protocol，用户数据报协议）是与TCP相对应的协议。它是面向非连接的协议，它不与对方建立连接，而是直接就把数据包发送过去。UDP适用于一次只传送少量数据、对可靠性要求不高的应用环境</li>
+</ul>
+<h3 id="TCP：流量控制"><a href="#TCP：流量控制" class="headerlink" title="TCP：流量控制"></a>TCP：流量控制</h3><p>TCP协议利用窗口机制实现流量控制；<br>TCP连接建立时，双方都为之分配了固定大小的缓冲空间；TCP的接收端只允许另一端发送其缓冲区所能接纳的数据：</p>
+<ul>
+<li>接收端在给发送端发送确认段时，通告接收窗口大小；</li>
+<li>发送端在接下来发送数据段时，确保未确认段的应用层数据总量不超过接收端通告的接收窗口大小，从而确保接收端不会发生缓存溢出。</li>
+</ul>
+<h3 id="TCP：拥塞控制"><a href="#TCP：拥塞控制" class="headerlink" title="TCP：拥塞控制"></a>TCP：拥塞控制</h3><p><strong>拥塞</strong><br>拥塞是指太多主机以太快的速度向网络中发送太多的数据，超过了网络处理能力，导致大量数据分组“拥挤”在网络中间设备（如路由器）队列中等待转发，网络性能显著下降的现象。<br>拥塞的后果：<br>①数据分组通过网络的时延显著增加。<br>②由于队列满导致大量分组被丢弃。</p>
+<p><strong>拥塞控制</strong><br>拥塞控制就是通过合理调度、规范、调整向网络中发送数据的主机数量、发送速率或数据量，以避免拥塞或尽快消除已发生的拥塞。</p>
+<p><strong>TCP拥塞控制：</strong><br>从端到端的角度，推测网络是否发生拥塞，如果推断网络发生拥塞，则立即将数据发送速率降下来，以便缓解网络拥塞。<br>①窗口机制：<br>通过调节窗口的大小实现对发送数据速率的调整。<br>②窗口调整的基本策略：<br><code>AIMD（Additive Increase,Multiplicative Decrease）</code>加性增加，乘性减少；<br>网络未发生拥塞时，逐渐“加性”增加窗口大小，当网络拥塞时“乘性”快速减小窗口大小。<br>③TCP的拥塞控制算法：<br>包括了<code>慢启动</code>、<code>拥塞避免</code>、<code>快速重传</code>和<code>快速恢复</code>4部分。</p>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p>传输层无法保证数据的可靠传输，只能通过应用层来实现。<br>实现的方式可以参照tcp可靠性传输的方式，只是实现不在传输层，实现转移到了应用层。<br>实现确认机制、重传机制、窗口确认机制。</p>
+<p>如果不利用linux协议栈以及上层socket机制，自己通过抓包和发包的方式去实现可靠性传输，那么必须实现如下功能：</p>
+<ul>
+<li>发送：包的分片、包确认、包的重发</li>
+<li>接收：包的调序、包的序号确认</li>
+</ul>
+<p>注：<br>①给数据包编号，按照包的顺序接收并存储；<br>②接收端接收到数据包后发送确认信息给发送端，发送端接收确认数据以后再继续发送下一个包，如果接收端收到的数据包的编号不是期望的编号，则要求发送端重新发送。</p>
+<blockquote>
+<p>目前利用udp实现了可靠的数据传输分别为RUDP、RTP、UDT。</p>
+</blockquote>
+<hr>
+<h3 id="面向连接和非面向连接的服务"><a href="#面向连接和非面向连接的服务" class="headerlink" title="面向连接和非面向连接的服务"></a>面向连接和非面向连接的服务</h3><p>面向连接的服务，通信双方在进行通信之前，要先在双方建立起一个完整的可以彼此沟通的通道，在通信过程中，整个连接的情况一直可以被实时地监控和管理。    </p>
+<p>非面向连接的服务，不需要预先建立一个联络两个通信节点的连接，需要通信的时候，发送节点就可以往网络上发送信息，让信息自主地在网络上去传，一般在传输的过程中不再加以监控。</p>
+<h3 id="Http和Https"><a href="#Http和Https" class="headerlink" title="Http和Https"></a>Http和Https</h3><p>Http协议运行在TCP之上，明文传输，客户端与服务器端都无法验证对方的身份；<br>Https是身披SSL(Secure Socket Layer)外壳的Http，运行于SSL上，SSL运行于TCP之上，是添加了加密和认证机制的HTTP。</p>
+<p>二者之间存在如下不同：</p>
+<ul>
+<li>端口不同：Http与Http使用不同的连接方式，用的端口也不一样，前者是80，后者是443；</li>
+<li>资源消耗：和HTTP通信相比，Https通信会由于加减密处理消耗更多的CPU和内存资源；</li>
+<li>开销：Https通信需要证书，而证书一般需要向认证机构购买；</li>
+</ul>
+<blockquote>
+<p>Https的加密机制是一种共享密钥加密和公开密钥加密并用的混合加密机制。</p>
+</blockquote>
+<p> <strong>HTTP请求报文和响应报文的结构</strong></p>
+<p><strong>请求报文：从客户向服务器发送请求报文</strong></p>
+<p>HTTP典型的请求方法有：</p>
+<ul>
+<li>GET：请求读取由URL所标识的信息</li>
+<li>HEAD：请求读取由URL所标识的信息的首部，无须在响应报文中包含对象。</li>
+<li>POST：给服务器添加信息（例如：注释）</li>
+<li>OPTION：请求一些选项的信息</li>
+<li>PUT：在指明的URL下存储一个文档</li>
+</ul>
+<p><strong>响应报文：从服务器到客户的回答</strong></p>
+<p>HTTP状态码：</p>
+<ul>
+<li>1xx：信息提示；通告信息，可能还需要进一步交互。</li>
+<li>2xx：成功；成功完成客户请求的操作，并进行响应</li>
+<li>3xx：重定向；表示资源已移走，需要向新的URL发送请求</li>
+<li>4xx：客户端错误；由于客户请求错误，无法成功响应</li>
+<li>5xx：服务端错误；由于服务端错误，无法成功响应</li>
+</ul>
+<p><strong>IP地址分类</strong></p>
+<p>A类地址(1~126)：网络号占前8位，以0开头，主机号占后24位。</p>
+<p>B类地址(128~191)：网络号占前16位，以10开头，主机号占后16位。</p>
+<p>C类地址(192~223)：网络号占前24位，以110开头，主机号占后8位。</p>
+<p>D类地址(224<del>239)：以1110开头，保留位多播地址。<br>E类地址(240</del>255)：以1111开头，保留位今后使用。</p>
+<p><strong>ARP地址解析协议的工作过程</strong></p>
+<p>通过IP地址获得物理地址，是设备通过自己知道的IP地址来获得自己不知道的物理地址的协议。</p>
+<p>过程：</p>
+<ul>
+<li>每个主机都会在自己的 ARP 缓冲区中建立一个 ARP 列表，以表示 IP 地址和 MAC 地址之间的对应关系</li>
+<li>当源主机要发送数据时，首先检查 ARP 列表中是否有对应 IP 地址的目的主机的 MAC 地址，如果有，则直接发送数据，如果没有，就向”本网段”的所有主机发送 ARP 数据包，该数据包包括的内容有：<code>源主机 IP 地址，源主机 MAC 地址，目的主机的 IP 地址</code>。  </li>
+<li>当本网络的所有主机收到该 ARP 数据包时，首先检查数据包中的目的主机 IP 地址是否是自己的 IP 地址，如果不是，则忽略该数据包，如果是，则首先从数据包中取出源主机的 IP 和 MAC 地址写入到 ARP 列表中，如果已经存在，则覆盖，然后将自己的 MAC 地址写入 ARP 响应包中，告诉源主机自己是它想要找的 MAC 地址。 </li>
+<li>源主机收到 ARP 响应包后。将目的主机的 IP 和 MAC 地址写入 ARP 列表，并利用此信息发送数据。如果源主机一直没有收到 ARP 响应数据包，表示 ARP 查询失败。广播发送ARP请求，单播发送 ARP 响应。</li>
+</ul>
+<p><strong>DNS（Domain Name System）域名系统的工作原理</strong></p>
+<p>当 DNS 客户机需要在程序中使用名称时，它会查询 DNS 服务器来解析该名称。客户机发送的每条查询信息包括三条信息：</p>
+<ul>
+<li>指定的 DNS 域名</li>
+<li>指定的查询类型</li>
+<li>DNS 域名的指定类别</li>
+</ul>
+<p>基于 UDP 服务，端口 53，该应用一般不直接为用户使用，而是为其他应用服务，如 <code>HTTP</code>，<code>SMTP</code> 等在其中需要完成主机名到 IP 地址的转换。</p>
+<p><strong>静态路由和动态路由</strong></p>
+<p>静态路由是由管理员手工配置的，适合比较简单的网络或需要做路由特殊控制。</p>
+<p>动态路由则是由动态路由协议自动维护的，不需人工干预，适合比较复杂大型的网络。 </p>
+<p>路由器能够自动地建立自己的路由表，并且能够根据实际实际情况的变化适时地进行调整。动态路由机制的运作依赖路由器的两个基本功能：对路由表的维护；路由器之间实时的路由信息交换。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/network/" rel="tag"># network</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/06/Java--HashMap/" rel="prev" title="Java-HashMap">
+                  <i class="fa fa-chevron-left"></i> Java-HashMap
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/07/%E8%AE%A1%E7%AE%97%E5%AF%86%E9%9B%86%E5%9E%8B%E5%92%8CIO%E5%AF%86%E9%9B%86%E5%9E%8B/" rel="next" title="计算密集型和IO密集型">
+                  计算密集型和IO密集型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凡夫</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

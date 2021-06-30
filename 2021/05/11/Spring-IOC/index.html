@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;gaoxing27.gitee.io&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Mist&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;right&quot;,&quot;display&quot;:&quot;always&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;.&#x2F;public&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:false}}</script>
+<meta name="description" content="IOC (Inversion of Control)就是控制反转，是指创建对象的控制权的转移，以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到 Spring 容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-IOC">
+<meta property="og:url" content="https://gaoxing27.gitee.io/2021/05/11/Spring-IOC/index.html">
+<meta property="og:site_name" content="和而不同">
+<meta property="og:description" content="IOC (Inversion of Control)就是控制反转，是指创建对象的控制权的转移，以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到 Spring 容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gaoxing27.gitee.io/images/spring/SpringBean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="https://gaoxing27.gitee.io/images/spring/BeanFactory%E5%92%8CApplicationContext%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="article:published_time" content="2021-05-11T09:00:31.000Z">
+<meta property="article:modified_time" content="2021-06-30T10:35:50.033Z">
+<meta property="article:author" content="凡夫">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="SpringMvc">
+<meta property="article:tag" content="Springboot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gaoxing27.gitee.io/images/spring/SpringBean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+
+
+<link rel="canonical" href="https://gaoxing27.gitee.io/2021/05/11/Spring-IOC/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;gaoxing27.gitee.io&#x2F;2021&#x2F;05&#x2F;11&#x2F;Spring-IOC&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;11&#x2F;Spring-IOC&#x2F;&quot;,&quot;title&quot;:&quot;Spring-IOC&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Spring-IOC | 和而不同</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="和而不同" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">和而不同</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">五朝</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">41</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">66</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-IOC-%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">Spring IOC 理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC-%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">IOC 的实现机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.</span> <span class="nav-text">Bean的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="nav-number">4.</span> <span class="nav-text">Spring 循环依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.</span> <span class="nav-text">Spring 解决循环依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean-%E5%88%9B%E5%BB%BA%E7%9A%84%E6%A0%B8%E5%BF%83%E4%B8%89%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">Bean 创建的核心三个方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="nav-number">4.3.</span> <span class="nav-text">三级缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B-Bean-%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">4.4.</span> <span class="nav-text">单例 Bean 的创建过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-%E8%A7%A3%E5%86%B3-A%E3%80%81B-%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%B5%81%E7%A8%8B"><span class="nav-number">4.5.</span> <span class="nav-text">Spring 解决 A、B 循环依赖流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-%E6%94%AF%E6%8C%81%E7%9A%84-Bean-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">5.</span> <span class="nav-text">Spring 支持的 Bean 作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-%E4%B8%AD%E7%9A%84%E5%8D%95%E4%BE%8B-Beans-%E6%98%AF%E5%90%A6%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">6.</span> <span class="nav-text">Spring 中的单例 Beans 是否线程安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">7.</span> <span class="nav-text">Spring的依赖注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D-Bean-%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">Spring 自动装配 Bean 的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Autowired-%E5%92%8C-Resource-%E5%8C%BA%E5%88%AB"><span class="nav-number">8.1.</span> <span class="nav-text">@Autowired 和 @Resource 区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ApplicationContext-%E5%92%8C-BeanFactory-%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">ApplicationContext 和 BeanFactory 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">Spring 框架的设计模式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="凡夫"
+      src="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+  <p class="site-author-name" itemprop="name">凡夫</p>
+  <div class="site-description" itemprop="description">临渊羡鱼,不如退而结网</div>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/fox9916" title="我的CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;fox9916" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>我的CSDN</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gaoxing27.gitee.io/2021/05/11/Spring-IOC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
+      <meta itemprop="name" content="凡夫">
+      <meta itemprop="description" content="临渊羡鱼,不如退而结网">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="和而不同">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring-IOC
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-05-11 17:00:31" itemprop="dateCreated datePublished" datetime="2021-05-11T17:00:31+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-30 18:35:50" itemprop="dateModified" datetime="2021-06-30T18:35:50+08:00">2021-06-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+            <div class="post-description">IOC (Inversion of Control)就是控制反转，是指创建对象的控制权的转移，以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到 Spring 容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系，</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Spring-IOC-理解"><a href="#Spring-IOC-理解" class="headerlink" title="Spring IOC 理解"></a>Spring IOC 理解</h3><p>IOC (Inversion of Control)就是控制反转，是指创建对象的控制权的转移，以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到 Spring 容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系，对象与对象之间松散耦合，也利于功能的复用。<br>而 DI 依赖注入，和控制反转是同一个概念的不同角度的描述，即应用程序在运行时依赖 IOC 容器来动态注入对象需要的外部资源；<br>最直观的表达就是，IOC 让对象的创建不用去 new，可以由 Spring 自动生产，使用 Java 的反射机制，根据配置文件在运行时动态的去创建对象以及管理对象，并调用对象的方法的；<br>Spring IOC 有三种注入方式 ：构造器注入、Setter 方法注入、注解注入；<br>IOC 让相互协作的组件保持松散的耦合，而 AOP 编程允许把遍布于应用各层的功能分离出来形成可重用的功能组件；</p>
+<h3 id="IOC-的实现机制"><a href="#IOC-的实现机制" class="headerlink" title="IOC 的实现机制"></a>IOC 的实现机制</h3><p>Spring 中的 IoC 的实现原理就是<strong>工厂模式+反射机制</strong></p>
+<p>Spring 容器在启动的时候，先会保存所有注册进来的 Bean 的定义信息， 注册到 BeanFactory 中；注册也只是将这些信息都保存到了注册中心（说到底核心是一个 BeanName-&gt; BeanDefinition 的 Map）；<br>设置 BeanFactory 的类加载器，添加几个 BeanPostProcessor，手动注册几个特殊的 Bean，如 Environment、SystemProperties；<br>如果有 Bean 实现了 BeanFactoryPostProcessor 接口，Spring 会负责调用里面的 postProcessBeanFactory 方法，这是一个扩展方法；<br>注册 BeanPostProcessor 的实现类，这是在 Bean 初始化前后执行的方法；<br>初始化国际化，事件广播器的模块，注册事件监听器；<br>然后 Spring 容器就会创建这些单例 Bean<br>用到这个 Bean 的时候；利用 getBean 创建 Bean,创建好以后保存在容器中；<br>统一创建剩下所有的 Bean 的时候；调用 finishBeanFactoryInitialization() 初始化所有剩下的单例 Bean；<br>最后广播事件，ApplicationContext 初始化 / 刷新完成；</p>
+<p><strong>Spring 的 IoC 设计支持以下功能</strong></p>
+<ul>
+<li>依赖注入</li>
+<li>依赖检查</li>
+<li>自动装配</li>
+<li>支持集合</li>
+<li>指定初始化方法和销毁方法</li>
+<li>支持回调某些方法（但是需要实现 Spring 接口，略有侵入）</li>
+</ul>
+<h3 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h3><p>在传统的Java应用中，bean的生命周期很简单。使用Java关键字new进行bean实例化，然后该bean就可以使用了。一旦该bean不再被使用，则由Java自动进行垃圾回收。相比之下，Spring容器中的bean的生命周期就显得相对复杂多了。正确理解Spring bean的生命周期非常重要，因为你或许要利用Spring提供的扩展点来自定义bean的创建过程。下图展示了bean装载到Spring应用上下文中的一个典型的生命周期过程。</p>
+<p><img src="/images/spring/SpringBean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="Spring中Bean的生命周期"></p>
+<p>bean在Spring容器中从创建到销毁经历了若干阶段，每一阶段都可以针对Spring如何管理bean进行个性化定制。</p>
+<p>正如你所见，在bean准备就绪之前，bean工厂执行了若干启动步骤。</p>
+<p>我们对上图进行详细描述：</p>
+<ol>
+<li>Spring对bean进行实例化；</li>
+<li>Spring将值和bean的引用注入到bean对应的属性中；</li>
+<li>如果bean实现了<u>BeanNameAware</u>接口，Spring将bean的ID传递给<u>setBean-Name()</u>方法；</li>
+<li>如果bean实现了<u>BeanFactoryAware</u>接口，Spring将调用<u>setBeanFactory()</u>方法，将BeanFactory容器实例传入；</li>
+<li>如果bean实现了<u>ApplicationContextAware</u>接口，Spring将调用<u>setApplicationContext()</u>方法，将bean所在的应用上下文的引用传入进来；</li>
+<li>如果bean实现了<u>BeanPostProcessor</u>接口，Spring将调用它们的<u>post-ProcessBeforeInitialization()</u>方法；</li>
+<li>如果bean实现了<u>InitializingBean</u>接口，Spring将调用它们的<u>after-PropertiesSet()</u>方法。类似地，如果bean使用initmethod声明了初始化方法，该方法也会被调用；</li>
+<li>如果bean实现了<u>BeanPostProcessor</u>接口，Spring将调用它们的<u>post-ProcessAfterInitialization()</u>方法；</li>
+<li>此时，bean已经准备就绪，可以被应用程序使用了，它们将一直驻留在应用上下文中，直到该应用上下文被销毁；</li>
+<li>如果bean实现了DisposableBean接口，Spring将调用它的destroy()接口方法。同样，如果bean使用destroy-method声明了销毁方法，该方法也会被调用。</li>
+</ol>
+<h3 id="Spring-循环依赖"><a href="#Spring-循环依赖" class="headerlink" title="Spring 循环依赖"></a>Spring 循环依赖</h3><p>Bean A 依赖于另一个 Bean B 时，Bean B 依赖于 Bean A：当 Spring 上下文加载所有 Bean 时，它会尝试按照它们完全工作所需的顺序创建 Bean ，例如，如果我们没有循环依赖：Bean A→Bean B→Bean C：Spring 将创建 bean C，然后创建 bean B（并将 bean 注入其中），然后创建 bean A（并将 bean B 注入其中）；但具有循环依赖时，Spring 无法决定应该首先创建哪个 bean，因为它们彼此依赖；<br>以 Setter 方式构成的循环依赖，Spring 可以自动解决，以构造器方式构成的循环依赖，Spring 无法自动解决：Setter 注入和构造器注入的区别就在于创建 Bean 的过程中，Setter 注入可以先用无参数构造方法返回 Bean 实例，再注入依赖的属性，使用到了 Spring 的三级缓存，而 constructor 方式无法先返回 Bean 的实例，必须先实例化它所依赖的属性，这样一来就会造成死循环所以会失败；<br>解决方案：我们使用比较多的在属性上 @Autowired 的方式，在 Spring 内部的处理中，与 Setter 方法不太一样，但用此种方式循环依赖也可以自动解决，原理同上，只要能先实例化出来，提前暴露出来，就可以解决循环依赖的问题；</p>
+<h4 id="Spring-解决循环依赖"><a href="#Spring-解决循环依赖" class="headerlink" title="Spring 解决循环依赖"></a>Spring 解决循环依赖</h4><p>Spring 使用了三级缓存解决了循环依赖的问题：在 populateBean() 给属性赋值阶段里面 Spring 会解析属性，并且赋值，当发现，A 对象里面依赖了 B，此时又会走 getBean 方法，但这个时候，你去缓存中是可以拿的到的；因为在对 createBeanInstance 对象创建完成以后已经放入了缓存当中，所以创建 B 的时候发现依赖 A，直接就从缓存中去拿，此时 B 创建完，A 也创建完；至此 Bean 的创建完成，最后将创建好的 Bean 放入单例缓存池中；</p>
+<h4 id="Bean-创建的核心三个方法"><a href="#Bean-创建的核心三个方法" class="headerlink" title="Bean 创建的核心三个方法"></a>Bean 创建的核心三个方法</h4><p>createBeanInstance：实例化，调用对象的构造方法实例化对象；<br>populateBean：填充属性，主要是对 Bean 的依赖属性进行注入（@Autowired）；<br>initializeBean：回到一些形如 initMethod、InitializingBean 等方法；<br>从对单例 Bean 的初始化可以看出，循环依赖主要发生在 populateBean，也就是 field 属性注入的处理；</p>
+<h4 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h4><p>singletonObjects：第一级单例缓存池，用于存放完全初始化好的 Bean，从该缓存中取出的 Bean 可以直接使用；<br>earlySingletonObjects：第二级，提前曝光的单例对象的 Cache，存放原始的 Bean 对象（尚未填充属性的 Bean）；<br>singletonFactories：第三级单例对象工厂缓存 ，单例对象工厂的 Cache，存放 Bean 工厂对象；</p>
+<h4 id="单例-Bean-的创建过程"><a href="#单例-Bean-的创建过程" class="headerlink" title="单例 Bean 的创建过程"></a>单例 Bean 的创建过程</h4><p>先从一级缓存 singletonObjects 中去获取（如果获取到就直接 return）；<br>如果获取不到或者对象正在创建中（isSingletonCurrentlyInCreation()），那就再从二级缓存 earlySingletonObjects 中获取（如果获取到就直接 return）；<br>如果还是获取不到，且允许 singletonFactories（allowEarlyReference=true）通过 getObject() 获取，就从三级缓存singletonFactory.getObject() 获取（如果获取到了就把这个 Bean 从 singletonFactories 中移除，并且放进 earlySingletonObjects，其实也就是从三级缓存移动（剪切）到了二级缓存）；</p>
+<h4 id="Spring-解决-A、B-循环依赖流程"><a href="#Spring-解决-A、B-循环依赖流程" class="headerlink" title="Spring 解决 A、B 循环依赖流程"></a>Spring 解决 A、B 循环依赖流程</h4><p>使用 context.getBean（A.class），为了获取容器内的单例 A，若 A 不存在，就走 A 这个 Bean 的创建流程，显然初次获取 A 是不存在的，所以开始创建 A；<br>开始实例化 A（createBeanInstance，注意此处仅仅是实例化），并将它放进缓存（此时 A 已经实例化完成，已经可以被引用了）；<br>开始准备初始化 A（populateBean）：解析 A 的依赖发现依赖注入了 B（此时需要去容器内获取 B）；<br>此时开始实例化 B，到了依赖注入 B 时，会通过 getBean(B) 去容器内找 B；<br>实例化 B，并将其放入缓存（此时 B 也能够被引用了）；<br>开始准备初始化 B，发现依赖注入 A（此时需要去容器内获取 A）；<br>初始化 B 时会调用 getBean(A) 去容器内找到 A，此时候因为 A 已经实例化完成了并且放进了缓存里，所以此时去缓存里看是已经存在 A 的引用，所以 getBean(A) 能够正常返回；<br>B初始化成功，return（此处 return 相当于是返回最上面的 getBean(B) ，回到了初始化 A 的流程中）；<br>因为 B 实例已经成功返回，因此最终 A 也初始化成功；<br>B 持有的已经是初始化完成的 A，A 持有的也是初始化完成的 B；</p>
+<p>Spring IOC 容器</p>
+<h3 id="Spring-支持的-Bean-作用域"><a href="#Spring-支持的-Bean-作用域" class="headerlink" title="Spring 支持的 Bean 作用域"></a>Spring 支持的 Bean 作用域</h3><p>singleton：默认，每个容器中只有一个 Bean 的实例，单例的模式由 BeanFactory 自身来维护；<br>prototype：为每一个 Bean 请求提供一个实例；<br>request：为每一个网络请求创建一个实例，在请求完成以后，Bean 会失效并被垃圾回收器回收；<br>session：与 request 范围类似，确保每个 session 中有一个 Bean 实例，在 session 过期后，Bean 会随之失效；<br>global-session：全局作用域，global-session 和 Portlet 应用相关；当你的应用部署在 Portlet 容器中工作时，它包含很多 Portlet；如果你想要声明让所有的 Portlet 共用全局的存储变量的话，那么这全局变量需要存储在 global-session中；全局作用域与 Servlet 中的 session 作用域效果相同；</p>
+<h3 id="Spring-中的单例-Beans-是否线程安全"><a href="#Spring-中的单例-Beans-是否线程安全" class="headerlink" title="Spring 中的单例 Beans 是否线程安全"></a>Spring 中的单例 Beans 是否线程安全</h3><p>Spring 框架并没有对单例 Bean 进行任何多线程的封装处理，关于单例 Bean 的线程安全和并发问题需要开发者自行去搞定，但实际上，大部分的 Spring Bean 并没有可变的状态（比如 Service 类和 DAO 类），所以在某种程度上说 Spring 的单例 Bean 是线程安全的；如果你的 Bean 有多种状态的话（比如 View Model 对象），就需要自行保证线程安全，最浅显的解决办法就是将多态 Bean 作用域由 “singleton” 变更为 “prototype”；</p>
+<h3 id="Spring的依赖注入"><a href="#Spring的依赖注入" class="headerlink" title="Spring的依赖注入"></a><strong>Spring的依赖注入</strong></h3><p>控制反转IoC是一个很大的概念，可以用不同的方式来实现。其主要实现方式有两种：<em>依赖注入和依赖查找</em></p>
+<p><strong>依赖注入</strong>：依赖注入（Dependency Injection），即<u>组件之间的依赖关系由容器在应用系统运行期来决定</u>，也就是由容器动态地将某种依赖关系的目标对象实例注入到应用系统中的各个关联的组件之中。组件不做定位查询，只提供普通的Java方法让容器去决定依赖关系。</p>
+<p><strong>依赖注入的基本原则</strong></p>
+<p>依赖注入的基本原则是：应用组件不应该负责查找资源或者其他依赖的协作对象。配置对象的工作应该由IoC容器负责，“查找资源”的逻辑应该从应用组件的代码中抽取出来，交给IoC容器负责。容器全权负责组件的装配，它会把符合依赖关系的对象通过属性（JavaBean中的setter）或者是构造器传递给需要的对象。</p>
+<p><strong>有哪些不同类型的依赖注入实现方式？</strong></p>
+<p>依赖注入是时下最流行的IoC实现方式，依赖注入分为接口注入（Interface Injection），Setter方法注入（Setter Injection）和构造器注入（Constructor Injection）三种方式。其中接口注入由于在灵活性和易用性比较差，现在从Spring4开始已被废弃。</p>
+<p>构造器依赖注入：构造器依赖注入通过容器触发一个类的构造器来实现的，该类有一系列参数，每个参数代表一个对其他类的依赖。</p>
+<p>Setter方法注入：Setter方法注入是容器通过调用无参构造器或无参static工厂 方法实例化bean之后，调用该bean的setter方法，即实现了基于setter的依赖注入。</p>
+<p>构造器依赖注入和 Setter方法注入的区别</p>
+<table>
+<thead>
+<tr>
+<th>构造函数注入</th>
+<th>setter 注入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有部分注入</td>
+<td>有部分注入</td>
+</tr>
+<tr>
+<td>不会覆盖 setter 属性</td>
+<td>会覆盖 setter 属性</td>
+</tr>
+<tr>
+<td>任意修改都会创建一个新实例</td>
+<td>任意修改不会创建一个新实例</td>
+</tr>
+<tr>
+<td>适用于设置很多属性</td>
+<td>适用于设置少量属性</td>
+</tr>
+</tbody></table>
+<p>​    两种依赖方式都可以使用，构造器注入和Setter方法注入。最好的解决方案是用构造器参数实现强制依赖，setter方法实现可选依赖。</p>
+<h3 id="Spring-自动装配-Bean-的方式"><a href="#Spring-自动装配-Bean-的方式" class="headerlink" title="Spring 自动装配 Bean 的方式"></a>Spring 自动装配 Bean 的方式</h3><p>Spring 容器负责创建应用程序中的 Bean，同时通过 ID 来协调这些对象之间的关系，只需要告诉 Spring 要创建哪些 Bean 并且如何将其装配到一起；<br>Spring 中 Bean 装配有两种方式：<br>属性注解；<br>属性自动装配（XML 配置）：<br>no：默认的方式是不进行自动装配的，通过手工设置 ref 属性来进行装配 Bean；<br>byName：通过 Bean 的名称进行自动装配，如果一个 Bean 的 Property 与另一 Bean Name 相同，就进行自动装配；<br>byType：通过参数的数据类型进行自动装配；<br>constructor：利用构造函数进行装配，并且构造函数的参数通过 byType 进行装配；<br>autodetect：自动探测，如果有构造方法，通过 construct 方式自动装配，否则使用 byType 的方式自动装配；</p>
+<h4 id="Autowired-和-Resource-区别"><a href="#Autowired-和-Resource-区别" class="headerlink" title="@Autowired 和 @Resource 区别"></a>@Autowired 和 @Resource 区别</h4><p>使用@Autowired注解来自动装配指定的bean之前需要在Spring配置文件进行配置，&lt;context:annotation-config /&gt;。</p>
+<p>在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。在使用@Autowired时，首先在容器中查询对应类型的bean：</p>
+<p>如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据；</p>
+<p>如果查询的结果不止一个，那么@Autowired会根据名称来查找；</p>
+<p>如果上述查找的结果为空，那么会抛出异常。解决方法时，使用required=false。</p>
+<p>@Resource：默认是按照名称来装配注入的，只有当找不到与名称匹配的 Bean 才会按照类型来装配注入；</p>
+<h3 id="ApplicationContext-和-BeanFactory-区别"><a href="#ApplicationContext-和-BeanFactory-区别" class="headerlink" title="ApplicationContext 和 BeanFactory 区别"></a>ApplicationContext 和 BeanFactory 区别</h3><p>BeanFactory和ApplicationContext是Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口。</p>
+<ul>
+<li><input disabled="" type="checkbox"> <em>依赖关系</em></li>
+</ul>
+<p>BeanFactory：是Spring里面最底层的接口，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的生命周期，维护bean之间的依赖关系。</p>
+<p>ApplicationContext接口作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能：</p>
+<ul>
+<li><p>继承MessageSource，因此支持国际化。</p>
+</li>
+<li><p>统一的资源文件访问方式。</p>
+</li>
+<li><p>提供在监听器中注册bean的事件。</p>
+</li>
+<li><p>同时加载多个配置文件。</p>
+</li>
+</ul>
+<ul>
+<li><p>载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层。</p>
+</li>
+<li><p><em>加载方式</em></p>
+</li>
+</ul>
+<p>BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。</p>
+<p>ApplicationContext，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。 ApplicationContext启动后预载入所有的单实例Bean，通过预载入单实例bean ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。</p>
+<p>相对于基本的BeanFactory，ApplicationContext 唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。</p>
+<ul>
+<li><input disabled="" type="checkbox"> <em>创建方式</em></li>
+</ul>
+<p>BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。</p>
+<ul>
+<li><input disabled="" type="checkbox"> <em>注册方式</em></li>
+</ul>
+<p>BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。</p>
+<p><strong>Spring 如何设计容器的，BeanFactory和ApplicationContext的关系详解</strong></p>
+<p>Spring 作者 Rod Johnson 设计了两个接口用以表示容器。</p>
+<ul>
+<li>BeanFactory</li>
+<li>ApplicationContext</li>
+</ul>
+<p>BeanFactory 简单粗暴，可以理解为就是个 HashMap，Key 是 BeanName，Value 是 Bean 实例。通常只提供注册（put），获取（get）这两个功能。我们可以称之为 “低级容器”。</p>
+<p>ApplicationContext 可以称之为 “高级容器”。因为他比 BeanFactory 多了更多的功能。他继承了多个接口。因此具备了更多的功能。例如资源的获取，支持多种消息（例如 JSP tag 的支持），对 BeanFactory 多了工具级别的支持等待。所以你看他的名字，已经不是 BeanFactory 之类的工厂了，而是 “应用上下文”， 代表着整个大容器的所有功能。该接口定义了一个 refresh 方法，此方法是所有阅读 Spring 源码的人的最熟悉的方法，用于刷新整个容器，即重新加载/刷新所有的 bean。</p>
+<p>当然，除了这两个大接口，还有其他的辅助接口，这里就不介绍他们了。</p>
+<p><strong>BeanFactory和ApplicationContext的关系</strong></p>
+<p>为了更直观的展示 “低级容器” 和 “高级容器” 的关系，这里通过常用的 ClassPathXmlApplicationContext 类来展示整个容器的层级 UML 关系。</p>
+<p><img src="/images/spring/BeanFactory%E5%92%8CApplicationContext%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="BeanFactory和ApplicationContext的关系"></p>
+<p>最上面的是 BeanFactory，下面的 3 个绿色的，都是功能扩展接口，这里就不展开讲。</p>
+<p>看下面的隶属 ApplicationContext 粉红色的 “高级容器”，依赖着 “低级容器”，这里说的是依赖，不是继承(实现接口)哦。他依赖着 “低级容器” 的 getBean 功能。而高级容器有更多的功能：支持不同的信息源头，可以访问文件资源，支持应用事件（Observer 模式）</p>
+<p>左边灰色区域的是 “低级容器”， 只负载加载 Bean，获取 Bean。容器其他的高级功能是没有的。例如上图画的 refresh 刷新 Bean 工厂所有配置，生命周期事件回调等。</p>
+<p>小结</p>
+<p>说了这么多，小结一下：IoC 在 Spring 里，只需要低级容器就可以实现，2 个步骤：</p>
+<ol>
+<li>加载配置文件，解析成 BeanDefinition 放在 Map 里。</li>
+<li>调用 getBean 的时候，从 BeanDefinition 所属的 Map 里，拿出 Class 对象进行实例化，同时，如果有依赖关系，将递归调用 getBean 方法 —— 完成依赖注入。</li>
+</ol>
+<p>上面就是 Spring 低级容器（BeanFactory）的 IoC。</p>
+<p>至于高级容器 ApplicationContext，他包含了低级容器的功能，当他执行 refresh 模板方法的时候，将刷新整个容器的 Bean。同时其作为高级容器，包含了太多的功能。一句话，他不仅仅是 IoC。他支持不同信息源头，支持 BeanFactory 工具类，支持层级容器，支持访问文件资源，支持事件发布通知，支持接口回调等等。</p>
+<p><strong>ApplicationContext通常的实现</strong></p>
+<p><strong>FileSystemXmlApplicationContext</strong> ：此容器从一个XML文件中加载beans的定义，XML Bean 配置文件的全路径名必须提供给它的构造函数。</p>
+<p><strong>ClassPathXmlApplicationContext</strong>：此容器也从一个XML文件中加载beans的定义，这里，你需要正确设置classpath因为这个容器将在classpath里找bean配置。</p>
+<p><strong>WebXmlApplicationContext</strong>：此容器加载一个XML文件，此文件定义了一个WEB应用的所有bean。</p>
+<h3 id="Spring-框架的设计模式"><a href="#Spring-框架的设计模式" class="headerlink" title="Spring 框架的设计模式"></a>Spring 框架的设计模式</h3><p>工厂模式：Spring 使用工厂模式通过 BeanFactory、ApplicationContext 创建 Bean 对象；<br>代理模式：Spring AOP 功能的实现；<br>单例模式：Spring 中的 Bean 默认都是单例的；<br>模板模式：Spring 中 jdbcTemplate、hibernateTemplate 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式；<br>包装器模式：我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库，这种模式让我们可以根据客户的需求能够动态切换不同的数据源；<br>观察者模式：Spring 事件驱动模型就是观察者模式很经典的一个应用；<br>适配器模式：Spring AOP 的增强或通知（Advice）使用到了适配器模式、Spring MVC 中也是用到了适配器模式适配 Controller；</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+              <a href="/tags/SpringMvc/" rel="tag"># SpringMvc</a>
+              <a href="/tags/Springboot/" rel="tag"># Springboot</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/10/Spring-cache%E5%AE%9E%E6%88%98/" rel="prev" title="Spring-cache实战">
+                  <i class="fa fa-chevron-left"></i> Spring-cache实战
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/12/Spring-Mvc/" rel="next" title="Spring-Mvc">
+                  Spring-Mvc <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">凡夫</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
