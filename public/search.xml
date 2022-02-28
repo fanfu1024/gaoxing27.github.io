@@ -1020,13 +1020,13 @@
       
         <tags>
             
+            <tag> http </tag>
+            
             <tag> get </tag>
             
             <tag> post </tag>
             
             <tag> web </tag>
-            
-            <tag> http </tag>
             
         </tags>
       
