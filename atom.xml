@@ -6,7 +6,7 @@
   <link href="https://gaoxing27.gitee.io/atom.xml" rel="self"/>
   
   <link href="https://gaoxing27.gitee.io/"/>
-  <updated>2022-02-28T03:59:52.060Z</updated>
+  <updated>2022-03-10T07:50:49.325Z</updated>
   <id>https://gaoxing27.gitee.io/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>好文摘录</title>
+    <link href="https://gaoxing27.gitee.io/2022/03/02/%E5%A5%BD%E6%96%87%E6%91%98%E5%BD%95/"/>
+    <id>https://gaoxing27.gitee.io/2022/03/02/%E5%A5%BD%E6%96%87%E6%91%98%E5%BD%95/</id>
+    <published>2022-03-02T03:52:04.000Z</published>
+    <updated>2022-03-10T07:50:49.325Z</updated>
+    
+    <content type="html"><![CDATA[<p>坐中静，破焦虑之贼<br>舍中得，破欲望之贼<br>事上练，破犹豫之贼<br>三贼皆破，则万事可成</p><span id="more"></span><p>你我暮年<br>闲坐庭院<br>云卷云舒听雨声<br>星密星稀赏月影<br>花开花落忆江南<br>你话往时我话往事<br>愿有岁月可回首<br>且以深情共白头  </p><p>时光总在静中定<br>流水却穿五孔桥<br>年少应虑道中事<br>莫等红尘催白头  </p><p>半山烟雨半生忧<br>一念心轻万事休<br>山后本是清静地<br>怎奈俗人一身愁  </p><p>我本一身傲骨<br>奈何世事无常<br>悲从心中起<br>百般不如人<br>本以为傲从骨中生<br>万难不屈膝<br>可是傲骨又值几分钱<br>最可叹放下了尊严<br>却换不回柴米油盐    </p><p>三十而立<br>人生将半<br>也曾克己奋发<br>胸怀激荡<br>幻想红衣白马<br>气吐眉扬<br>然终是柴米挫了锐气<br>染了风霜    </p><p>半生风雨半生寒<br>一杯浊酒敬流年<br>回首过往半生路<br>七分酸楚三人甜<br>日出东方催人醒<br>不及晚霞懂我情<br>辞别再无相见日<br>终是一人度春秋  </p><p>世事茫茫，光阴有限，算来何必奔忙。人生碌碌，竟短论长，却不道荣枯有数，得失难量。看那秋风金谷，夜月乌江，阿房宫冷，铜雀台荒。荣华花上露，富贵草上霜。机关参透，万虑皆忘。夸什么龙楼凤阁，说什么利锁名缰。闲来静处，且将诗酒猖狂。    </p><p>法不轻传，道不贱卖，师不顺路，医不叩门，千金不传无义子，万财不渡忘恩人，医逢信者但可救，道遇无明枉费心，甘露不润无根草，妙法只渡有缘人。    </p><p>不与君子争名，不与小人夺利，不与天地争巧，将军有剑不斩苍蝇，文臣执笔不负苍生。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;坐中静，破焦虑之贼&lt;br&gt;舍中得，破欲望之贼&lt;br&gt;事上练，破犹豫之贼&lt;br&gt;三贼皆破，则万事可成&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>好好的写代码吧</title>
@@ -216,27 +233,6 @@
     <category term="redis" scheme="https://gaoxing27.gitee.io/tags/redis/"/>
     
     <category term="线程模型" scheme="https://gaoxing27.gitee.io/tags/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis-集群</title>
-    <link href="https://gaoxing27.gitee.io/2021/05/26/redis-%E9%9B%86%E7%BE%A4/"/>
-    <id>https://gaoxing27.gitee.io/2021/05/26/redis-%E9%9B%86%E7%BE%A4/</id>
-    <published>2021-05-26T09:41:51.000Z</published>
-    <updated>2021-06-30T10:41:35.889Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>Redis Cluster是Redis官方提供的Redis集群功能，分布式架构，去中心化，即Redis Cluster中有多个节点，每个节点都负责进行数据读写操作，每个节点之间通过一种特殊的二进制 协议相互交互集群信息进行通信。Redis Cluster 将所有数据划分为 16384 的 slots，，每个节点负责其中一部分槽位。槽位的信息存储于每个节点中， 当 Redis Cluster 的客户端来连接集群时，它也会得到一份集群的槽位配置信 息。这样当客户端要查找某个 key 时，可以直接定位到目标节点。  另外，RedisCluster 的每个节点会将集群的配置信息持久化到配置文件中，所以 必须确保配置文件是可写的，而且尽量不要依靠人工修改配置文件。</p><p><img src="/images/redis/redis-cluster-%E6%9E%B6%E6%9E%84.png" alt="redis-cluster-架构"></p><p>跳转：当客户端向一个错误的节点发出了指令，该节点会发现指令的 key 所在的槽位并 不归自己管理，这时它会向客户端发送一个特殊的跳转指令携带目标操作的节点 地址，告诉客户端去连这个节点去获取数据。客户端收到 MOVED 指令后，要立即纠正本地的槽位映射表。后续所有 key 将 使用新的槽位映射表。</p><p>容错：Redis Cluster 可以为每个主节点设置若干个从节点，单主节点故障时，集群会 自动将其中某个从节点提升为主节点。如果某个主节点没有从节点，那么当它发 生故障时，集群将完全处于不可用状态。不过 Redis 也提供了一个参数 cluster-require-full-coverage 可以允许部分节点故障，其它节点还可以继续 提供对外访问。</p><h3 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h3><p><img src="/images/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F.png" alt="哨兵模式"></p><p>More Actions我们可以将 Redis Sentinel 集群看成是一个 ZooKeeper 集群，它是集群高可用 的心脏，它一般是由 3～5 个节点组成，这样挂了个别节点集群还可以正常运转。 它负责持续监控主从节点的健康，当主节点挂掉时，自动选择一个最优的从节点 切换为主节点。客户端来连接集群时，会首先连接 sentinel，通过 sentinel 来 查询主节点的地址，然后再去连接主节点进行数据交互。当主节点发生故障时， 客户端会重新向 sentinel 要地址，sentinel 会将最新的主节点地址告诉客户 端。如此应用程序将无需重启即可自动完成节点切换。比如上图的主节点挂掉 后，集群将可能自动调整为下图所示结构。</p><p><img src="/images/redis/%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F%E9%87%8D%E6%96%B0%E9%80%89%E4%B8%BE%E5%90%8E.png" alt="哨兵模式重新选举后"></p><p>从这张图中我们能看到主节点挂掉了，原先的主从复制也断开了，客户端和损坏 的主节点也断开了。从节点被提升为新的主节点，其它从节点开始和新的主节点 建立复制关系。客户端通过新的主节点继续进行交互。Sentinel 会持续监控已经 挂掉了主节点，待它恢复后，原主节点成为新的主节点的从节点；</p><blockquote><p>引用：<br><a href="https://www.jianshu.com/p/813a79ddf932">https://www.jianshu.com/p/813a79ddf932</a><br>《Redis 深度历险：核心原理与应用实践》</p></blockquote>]]></content>
-    
-    
-    <summary type="html">Redis Cluster是Redis官方提供的Redis集群功能，分布式架构，去中心化，即Redis Cluster中有多个节点，每个节点都负责进行数据读写操作，每个节点之间通过一种特殊的二进制 协议相互交互集群信息进行通信。Redis Cluster 将所有数据划分为 16384 的 slots，，每个节点负责其中一部分槽位。槽位的信息存储于每个节点中， 当 Redis Cluster 的客户端来连接集群时，它也会得到一份集群的槽位配置信 息。这样当客户端要查找某个 key 时，可以直接定位到目标节点。</summary>
-    
-    
-    
-    <category term="redis" scheme="https://gaoxing27.gitee.io/categories/redis/"/>
-    
-    
-    <category term="redis" scheme="https://gaoxing27.gitee.io/tags/redis/"/>
     
   </entry>
   
