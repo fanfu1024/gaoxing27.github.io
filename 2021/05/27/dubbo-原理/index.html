@@ -24,7 +24,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dubbo-原理">
 <meta property="og:url" content="https://gaoxing27.gitee.io/2021/05/27/dubbo-%E5%8E%9F%E7%90%86/index.html">
-<meta property="og:site_name" content="和而不同">
+<meta property="og:site_name" content="静">
 <meta property="og:description" content="Dubbo 是一款高性能、轻量级的开源 RPC 框架，提供服务自动注册、自动发现等高效服务治理方案， 可以和 Spring 框架无缝集成。随着服务化的进一步发展，服务越来越多，服务之间的调用和依赖关系也越来越复杂，诞生了面向服务的架构体系(SOA)，也因此衍生出了一系列相应的技术，如对服务提供、服务调用、连接处理、通信协议、序列化方式、服务发现、服务路由、日志输出等行为进行封装的服务框架。就这样为">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gaoxing27.gitee.io/images/dubbo/Dubbo%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://gaoxing27.gitee.io/images/dubbo/dubbo%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E5%92%8C%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B.png">
 <meta property="article:published_time" content="2021-05-27T11:22:17.000Z">
 <meta property="article:modified_time" content="2021-06-30T10:59:22.503Z">
-<meta property="article:author" content="凡夫">
+<meta property="article:author" content="夜听冰河">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Dubbo">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
 <script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;gaoxing27.gitee.io&#x2F;2021&#x2F;05&#x2F;27&#x2F;dubbo-%E5%8E%9F%E7%90%86&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;27&#x2F;dubbo-原理&#x2F;&quot;,&quot;title&quot;:&quot;Dubbo-原理&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>Dubbo-原理 | 和而不同</title><script src="/js/config.js"></script>
+<title>Dubbo-原理 | 静</title><script src="/js/config.js"></script>
   
 
 
@@ -56,7 +56,7 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<link rel="alternate" href="/atom.xml" title="和而不同" type="application/atom+xml">
+<link rel="alternate" href="/atom.xml" title="静" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -77,7 +77,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">和而不同</h1>
+      <h1 class="site-title">静</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">五朝</p>
@@ -161,10 +161,10 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="凡夫"
+    <img class="site-author-image" itemprop="image" alt="夜听冰河"
       src="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
-  <p class="site-author-name" itemprop="name">凡夫</p>
-  <div class="site-description" itemprop="description">临渊羡鱼,不如退而结网</div>
+  <p class="site-author-name" itemprop="name">夜听冰河</p>
+  <div class="site-description" itemprop="description">夜阑卧听风吹雨，铁马冰河入梦来</div>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
@@ -209,12 +209,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head/%E8%9D%99%E8%9D%A0%E4%BE%A0.jpg">
-      <meta itemprop="name" content="凡夫">
-      <meta itemprop="description" content="临渊羡鱼,不如退而结网">
+      <meta itemprop="name" content="夜听冰河">
+      <meta itemprop="description" content="夜阑卧听风吹雨，铁马冰河入梦来">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="和而不同">
+      <meta itemprop="name" content="静">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -479,7 +479,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">凡夫</span>
+  <span class="author" itemprop="copyrightHolder">夜听冰河</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
